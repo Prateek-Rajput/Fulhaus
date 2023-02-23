@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Image Classification by Prateek</title>
+</head>
+
+<body>
+    <form id="submission_form" action="/classify" method="post" enctype="multipart/form-data">
+        <label for="file">Choose an image for classification:</label><br /><br />
+        <input type="file" name="file" id="image_classify"><br /><br />
+    </form>
+    <button id="submit">Classify this image!</button><br /><br />
+    <p id="output"></p>
+
+    <script>
+        const form = document.getElementById('submission_form');
+        const output = document.getElementById('output')
+        const submitButton = document.getElementById('submit')
+        submitButton.addEventListener('click', formSubmission);
+        function formSubmission() {
+            const xhr = new XMLHttpRequest();
+
+            const formData = new FormData(form);
+
+            // Received the classification label
+            xhr.addEventListener('load', (event) => {
+                console.log(event);
+                output.textContent = event.target.responseText
+            })
+
+            // Error handling
+            xhr.addEventListener('error', (event) => {
+                console.log(event);
+                alert("Error: " + event.target.reesponseText);
+                output.textContent = "Error: " + event.target.responseText;
+            })
+
+            // Set up and send request
+            xhr.open('POST', '/classify')
+            output.textContent = 'Loading...';
+            xhr.send(formData);
+        }
+    </script>
+</body>
