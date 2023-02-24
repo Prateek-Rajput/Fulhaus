@@ -11,13 +11,28 @@
     </form>
     <button id="submit">Classify this image!</button><br /><br />
     <p id="output"></p>
+    <img id="displaySelectedImage">
 
     <script>
         const form = document.getElementById('submission_form');
-        const output = document.getElementById('output')
-        const submitButton = document.getElementById('submit')
+        const output = document.getElementById('output');
+        const submitButton = document.getElementById('submit');
+        const classifyInput = document.getElementById('image_classify');
+        const displaySelectedImage = document.getElementById('displaySelectedImage');
+
+        classifyInput.addEventListener('input', fileInputListener);
+        function fileInputListener(event) {
+            if (event.target.files.length > 0) {
+                let file = event.target.files[0];
+                let url = URL.createObjectURL(file);
+                displaySelectedImage.src = url;
+            } else {
+                displaySelectedImage.src = '';
+            }
+        }
+
         submitButton.addEventListener('click', formSubmission);
-        function formSubmission() {
+        function formSubmission(event) {
             const xhr = new XMLHttpRequest();
 
             const formData = new FormData(form);
