@@ -3,7 +3,6 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 import os
-
 import cv2
 import numpy
 from PIL import Image
